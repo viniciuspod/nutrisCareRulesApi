@@ -1,7 +1,7 @@
 package br.com.nutriscare.nutrisCareRulesApi.service;
 
-import br.com.nutriscare.nutrisCareRulesApi.entity.Alimentos;
-import br.com.nutriscare.nutrisCareRulesApi.repository.AlimentosRepository;
+import br.com.nutriscare.nutrisCareRulesApi.entity.Food;
+import br.com.nutriscare.nutrisCareRulesApi.repository.FoodRepository;
 import com.opencsv.CSVParser;
 import com.opencsv.CSVParserBuilder;
 import com.opencsv.CSVReader;
@@ -22,7 +22,7 @@ import java.util.List;
 public class CsvImportService {
 
     @Autowired
-    private AlimentosRepository alimentosRepository;
+    private FoodRepository foodRepository;
 
     public void importCsv(String path){
         try {
@@ -32,54 +32,54 @@ public class CsvImportService {
                     .withCSVParser(parser)
                     .build();
 
-            List<Alimentos> alimentosList = new ArrayList<>();
+            List<Food> foods = new ArrayList<>();
             String[] line;
             reader.readNext();
             while ((line = reader.readNext()) != null) {
-                Alimentos alimentos = new Alimentos();
-                alimentos.setId(Long.parseLong(line[0]));
-                alimentos.setCategoria(line[1]);
-                alimentos.setDescricao(line[2]);
-                alimentos.setUmidadePerCent(parseDouble(line[3]));
-                alimentos.setQuiloCalorias(parseDouble(line[4]));
-                alimentos.setQuiloJoules(parseDouble(line[5]));
-                alimentos.setProteinaGrama(parseDouble(line[6]));
-                alimentos.setLipideosGrama(parseDouble(line[7]));
-                alimentos.setColesterolMiliGrama(parseDouble(line[8]));
-                alimentos.setCarboidratoGrama(parseDouble(line[9]));
-                alimentos.setFibraAlimentarGrama(parseDouble(line[10]));
-                alimentos.setCinzasGrama(parseDouble(line[11]));
-                alimentos.setCalcioGrama(parseDouble(line[12]));
-                alimentos.setMagnesioGrama(parseDouble(line[13]));
-                alimentos.setManganesMiliGrama(parseDouble(line[14]));
-                alimentos.setFosforoMiliGrama(parseDouble(line[15]));
-                alimentos.setFerroMiliGrama(parseDouble(line[16]));
-                alimentos.setSodioMiliGrama(parseDouble(line[17]));
-                alimentos.setPotassioMiliGrama(parseDouble(line[18]));
-                alimentos.setCobreMiliGrama(parseDouble(line[19]));
-                alimentos.setZincoMiliGrama(parseDouble(line[20]));
-                alimentos.setRetinolMicroGrama(parseDouble(line[21]));
-                alimentos.setReMicroGrama(parseDouble(line[22]));
-                alimentos.setRaeMicroGrama(parseDouble(line[23]));
-                alimentos.setTiaminaMiliGrama(parseDouble(line[24]));
-                alimentos.setRiboflavinaMiliGrama(parseDouble(line[25]));
-                alimentos.setPiridoxinaMiliGrama(parseDouble(line[26]));
-                alimentos.setNiacinaMiliGrama(parseDouble(line[27]));
-                alimentos.setVitaminaCMiliGrama(parseDouble(line[28]));
-                alimentosList.add(alimentos);
+                Food food = new Food();
+                food.setId(Long.parseLong(line[0]));
+                food.setCategory(line[1]);
+                food.setDescription(line[2]);
+                food.setMoisturePercent(parseDouble(line[3]));
+                food.setKilocalories(parseDouble(line[4]));
+                food.setKilojoules(parseDouble(line[5]));
+                food.setProteinGrams(parseDouble(line[6]));
+                food.setLipidsGrams(parseDouble(line[7]));
+                food.setCholesterolMilligrams(parseDouble(line[8]));
+                food.setCarbohydratesGrams(parseDouble(line[9]));
+                food.setDietaryFiberGrams(parseDouble(line[10]));
+                food.setAshGrams(parseDouble(line[11]));
+                food.setCalciumGrams(parseDouble(line[12]));
+                food.setMagnesiumGrams(parseDouble(line[13]));
+                food.setManganeseMilligrams(parseDouble(line[14]));
+                food.setPhosphorusMilligrams(parseDouble(line[15]));
+                food.setIronMilligrams(parseDouble(line[16]));
+                food.setSodiumMilligrams(parseDouble(line[17]));
+                food.setPotassiumMilligrams(parseDouble(line[18]));
+                food.setCopperMilligrams(parseDouble(line[19]));
+                food.setZincMilligrams(parseDouble(line[20]));
+                food.setRetinolMicrograms(parseDouble(line[21]));
+                food.setReMicrograms(parseDouble(line[22]));
+                food.setRaeMicrograms(parseDouble(line[23]));
+                food.setThiamineMilligrams(parseDouble(line[24]));
+                food.setRiboflavinMilligrams(parseDouble(line[25]));
+                food.setPyridoxineMilligrams(parseDouble(line[26]));
+                food.setNiacinMilligrams(parseDouble(line[27]));
+                food.setVitaminCMilligrams(parseDouble(line[28]));
+                foods.add(food);
             }
-            alimentosRepository.saveAll(alimentosList);
+            foodRepository.saveAll(foods);
         } catch (FileNotFoundException e) {
-            log.info("Arquivo CSV não encontrado");
+            log.info("CSV file not found");
             throw new RuntimeException(e);
         } catch (IOException e) {
-            log.info("Erro ao ler arquivo CSV");
+            log.info("Error reading CSV file");
             throw new RuntimeException(e);
         } catch (CsvValidationException e) {
-            log.info("Erro ao validar arquivo CSV");
+            log.info("Error validating CSV file");
             throw new RuntimeException(e);
         } catch (NumberFormatException e) {
-            log.info("Erro ao converter valor numérico");
+            log.info("Error converting numeric value");
             throw new RuntimeException(e);
         }
     }
