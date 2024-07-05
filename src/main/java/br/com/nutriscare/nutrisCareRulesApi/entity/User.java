@@ -1,12 +1,16 @@
 package br.com.nutriscare.nutrisCareRulesApi.entity;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,11 +22,11 @@ import java.util.List;
 public class User {
 
     @Id
-    private Long id;
+    private String id;
 
     private String name;
     private String email;
-    private LocalDateTime birthDate;
+    private LocalDate birthDate;
     private String gender;
     private Double height;
     private Double weight;

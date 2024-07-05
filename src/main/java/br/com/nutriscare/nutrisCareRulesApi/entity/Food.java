@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
 @Document(collection = "t_food")
@@ -13,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Food {
 
     @Id
-    private Long id;
+    private String id;
 
     private String category;
     private String description;

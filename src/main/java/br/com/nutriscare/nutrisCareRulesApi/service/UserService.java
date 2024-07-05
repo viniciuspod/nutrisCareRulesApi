@@ -2,6 +2,7 @@ package br.com.nutriscare.nutrisCareRulesApi.service;
 
 import br.com.nutriscare.nutrisCareRulesApi.builder.UserBuilder;
 import br.com.nutriscare.nutrisCareRulesApi.dto.UserDTO;
+import br.com.nutriscare.nutrisCareRulesApi.entity.HealthUsu;
 import br.com.nutriscare.nutrisCareRulesApi.entity.User;
 import br.com.nutriscare.nutrisCareRulesApi.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class UserService {
         }
     }
 
-    public User editUser(Long id, UserDTO userDTO){
+    public User editUser(String id, UserDTO userDTO){
         try{
             User user = getUserById(id);
             updateUserFromDTO(user, userDTO);
@@ -65,7 +66,18 @@ public class UserService {
         }
     }
 
-    public void deleteUser(Long id){
+    public void editHealthUsu(String id, HealthUsu healthUsu){
+        try{
+            User user = getUserById(id);
+            user.setHealthUsu(healthUsu);
+            userRepository.save(user);
+        }catch (DataAccessException e){
+            log.info("ERROR to edit healthUsu" + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteUser(String id){
         try{
             userRepository.deleteById(id);
         }catch (DataAccessException e){
@@ -74,7 +86,7 @@ public class UserService {
         }
     }
 
-    public User getUserById(Long id){
+    public User getUserById(String id){
         try{
             return userRepository.findById(id).orElse(new User());
         }catch (DataAccessException e){

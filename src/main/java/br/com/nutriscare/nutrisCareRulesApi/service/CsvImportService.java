@@ -37,7 +37,6 @@ public class CsvImportService {
             reader.readNext();
             while ((line = reader.readNext()) != null) {
                 Food food = new Food();
-                food.setId(Long.parseLong(line[0]));
                 food.setCategory(line[1]);
                 food.setDescription(line[2]);
                 food.setMoisturePercent(parseDouble(line[3]));

@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController(value = "/healthUsu")
+@RestController
+@RequestMapping(value = "/api/healthUsu")
 @Slf4j
 public class HealthUsuController {
 
@@ -27,7 +28,7 @@ public class HealthUsuController {
     }
 
     @GetMapping(path = "/get")
-    public ResponseEntity<?> getHealthUsu(@RequestParam Long id){
+    public ResponseEntity<?> getHealthUsu(@RequestParam String id){
         try {
             HealthUsu healthUsu = healthUsuService.getHealthUsu(id);
             return ResponseEntity.ok().body(healthUsu);
@@ -38,7 +39,7 @@ public class HealthUsuController {
     }
 
     @PutMapping(path = "/update")
-    public ResponseEntity<?> updateHealthUsu(@RequestParam Long id, @RequestBody HealthUsuDTO healthUsuDTO){
+    public ResponseEntity<?> updateHealthUsu(@RequestParam String id, @RequestBody HealthUsuDTO healthUsuDTO){
         try {
             HealthUsu healthUsu = healthUsuService.updateHealthUsu(id, healthUsuDTO);
             return ResponseEntity.ok().body(healthUsu);
@@ -49,7 +50,7 @@ public class HealthUsuController {
     }
 
     @DeleteMapping(path = "/delete")
-    public ResponseEntity<?> deleteHealthUsu(@RequestParam Long id){
+    public ResponseEntity<?> deleteHealthUsu(@RequestParam String id){
         try {
             healthUsuService.deleteHealthUsu(id);
             return ResponseEntity.ok().body("HealthUsu deleted");

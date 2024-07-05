@@ -23,15 +23,18 @@ public class HealthUsuService {
 
     public HealthUsu saveHealthUsu(HealthUsuDTO healthUsuDTO){
         try{
-            return healthUsuRepository.save(
+
+            HealthUsu healthUsu = healthUsuRepository.save(
                     healthUsuBuilder.buildHealthUsu(healthUsuDTO, calculateBMI(healthUsuDTO.getUserId())));
+            userService.editHealthUsu(healthUsuDTO.getUserId(),healthUsu);
+            return healthUsu;
         } catch (Exception e) {
             log.info("ERROR to save HealthUsu" + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
-    private Double calculateBMI(Long userId) {
+    private Double calculateBMI(String userId) {
         try {
             User user = getUserById(userId);
             Double height = user.getHeight();
@@ -46,11 +49,11 @@ public class HealthUsuService {
         }
     }
 
-    private User getUserById(Long id) {
+    private User getUserById(String id) {
         return userService.getUserById(id);
     }
 
-    public HealthUsu getHealthUsu(Long id) {
+    public HealthUsu getHealthUsu(String id) {
         try {
             return healthUsuRepository.findById(id).orElse(new HealthUsu());
         } catch (Exception e) {
@@ -59,7 +62,7 @@ public class HealthUsuService {
         }
     }
 
-    public HealthUsu updateHealthUsu(Long id, HealthUsuDTO healthUsuDTO) {
+    public HealthUsu updateHealthUsu(String id, HealthUsuDTO healthUsuDTO) {
         try {
             HealthUsu healthUsu = getHealthUsu(id);
             updateHealthUsuFromDTO(healthUsu, healthUsuDTO);
@@ -97,7 +100,7 @@ public class HealthUsuService {
         }
     }
 
-    public void deleteHealthUsu(Long id) {
+    public void deleteHealthUsu(String id) {
         try {
             healthUsuRepository.deleteById(id);
         } catch (Exception e) {

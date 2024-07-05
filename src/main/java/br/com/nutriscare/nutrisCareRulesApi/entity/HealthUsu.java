@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
@@ -17,11 +18,11 @@ import java.util.List;
 public class HealthUsu {
 
     @Id
-    private Long id;
+    private String id;
 
-    private int bloodPressure;
-    private double cholesterolLevel;
-    private double glucoseLevel;
+    private Integer bloodPressure;
+    private Double cholesterolLevel;
+    private Double glucoseLevel;
     private Double bmi;
     private List<String> medicalConsultationHistory;
     private List<String> foodAllergies;

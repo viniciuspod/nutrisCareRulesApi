@@ -6,7 +6,7 @@ import java.util.List;
 @Data
 public class HealthUsuDTO {
 
-    private Long userId;
+    private String userId;
     private Integer bloodPressure;
     private Double cholesterolLevel;
     private Double glucoseLevel;

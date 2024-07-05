@@ -25,7 +25,7 @@ public class FoodService {
         }
     }
 
-    public Food findFoodById(Long id){
+    public Food findFoodById(String id){
         try {
             return foodRepository.findById(id).orElse(new Food());
         } catch (DataAccessException e) {

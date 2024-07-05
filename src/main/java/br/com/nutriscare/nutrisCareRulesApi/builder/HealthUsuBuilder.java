@@ -1,9 +1,12 @@
 package br.com.nutriscare.nutrisCareRulesApi.builder;
 
+import br.com.nutriscare.nutrisCareRulesApi.Helper.ObjectHelper;
 import br.com.nutriscare.nutrisCareRulesApi.dto.HealthUsuDTO;
 import br.com.nutriscare.nutrisCareRulesApi.entity.HealthUsu;
 
 public class HealthUsuBuilder {
+
+    private final ObjectHelper objectHelper = new ObjectHelper();
 
     public HealthUsu buildHealthUsu(HealthUsuDTO healthUsuDTO, Double Bmi){
         return HealthUsu.builder()

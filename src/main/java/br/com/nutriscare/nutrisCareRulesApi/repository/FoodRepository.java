@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FoodRepository extends MongoRepository<Food, Long> {
+public interface FoodRepository extends MongoRepository<Food, String> {
 }

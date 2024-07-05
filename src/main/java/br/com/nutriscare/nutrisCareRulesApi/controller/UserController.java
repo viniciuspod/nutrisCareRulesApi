@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController(value = "/user")
+@RestController
+@RequestMapping(value = "/api/user")
 @Slf4j
 public class UserController {
 
@@ -27,7 +28,7 @@ public class UserController {
     }
 
     @PutMapping(path = "/update")
-    public ResponseEntity<?> editUser(@RequestParam Long id, @RequestBody UserDTO userDTO){
+    public ResponseEntity<?> editUser(@RequestParam String id, @RequestBody UserDTO userDTO){
        try{
            User user = userService.editUser(id, userDTO);
            return ResponseEntity.ok().body(user);
@@ -38,7 +39,7 @@ public class UserController {
     }
 
     @DeleteMapping(path = "/delete")
-    public ResponseEntity<?> deleteUser(@RequestParam Long id){
+    public ResponseEntity<?> deleteUser(@RequestParam String id){
        try{
            userService.deleteUser(id);
            return ResponseEntity.ok().body("User deleted");
@@ -49,7 +50,7 @@ public class UserController {
     }
 
     @GetMapping(path = "/get")
-    public ResponseEntity<?> getUser(@RequestParam Long id){
+    public ResponseEntity<?> getUser(@RequestParam String id){
        try{
            User user = userService.getUserById(id);
            return ResponseEntity.ok().body(user);
