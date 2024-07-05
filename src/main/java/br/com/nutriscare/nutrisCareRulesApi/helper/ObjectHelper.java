@@ -1,4 +1,4 @@
-package br.com.nutriscare.nutrisCareRulesApi.Helper;
+package br.com.nutriscare.nutrisCareRulesApi.helper;
 
 public class ObjectHelper {
 

@@ -1,6 +1,6 @@
 package br.com.nutriscare.nutrisCareRulesApi.builder;
 
-import br.com.nutriscare.nutrisCareRulesApi.Helper.ObjectHelper;
+import br.com.nutriscare.nutrisCareRulesApi.helper.ObjectHelper;
 import br.com.nutriscare.nutrisCareRulesApi.dto.HealthUsuDTO;
 import br.com.nutriscare.nutrisCareRulesApi.entity.HealthUsu;
 

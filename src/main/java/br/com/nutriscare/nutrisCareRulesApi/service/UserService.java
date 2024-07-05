@@ -58,11 +58,11 @@ public class UserService {
         if (userDTO.getWeight() != null) {
             user.setWeight(userDTO.getWeight());
         }
-        if (userDTO.getGoals() != null) {
-            user.setGoals(userDTO.getGoals());
+        if (userDTO.getLevelGoals() != null) {
+            user.setLevelGoals(userDTO.getLevelGoals());
         }
-        if (userDTO.getPhysicalActivityLevel() != null) {
-            user.setPhysicalActivityLevel(userDTO.getPhysicalActivityLevel());
+        if (userDTO.getLevelPhysicalActivityLevel() != null) {
+            user.setLevelPhysicalActivityLevel(userDTO.getLevelPhysicalActivityLevel());
         }
     }
 
