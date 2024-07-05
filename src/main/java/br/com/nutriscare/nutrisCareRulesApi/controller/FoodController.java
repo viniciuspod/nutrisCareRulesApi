@@ -18,7 +18,7 @@ public class FoodController {
     @Autowired
     private FoodService foodService;
 
-    @GetMapping(path = "/get/food/all")
+    @GetMapping(path = "/get/all")
     public ResponseEntity<?> findAllAlimentos(){
         try {
             List<Food> foods = foodService.findAllFoods();
@@ -29,7 +29,7 @@ public class FoodController {
         }
     }
 
-    @GetMapping(path = "/get/food")
+    @GetMapping(path = "/get")
     public ResponseEntity<?> findAlimentosById(@RequestParam Long id){
         try {
             Food food = foodService.findFoodById(id);
