@@ -1,11 +1,18 @@
 package org.lowScore;
 
-import br.com.nutriscare.nutrisCareRulesApi.entity.User
+import br.com.nutriscare.nutrisCareRulesApi.entity.User;
+import br.com.nutriscare.nutrisCareRulesApi.entity.HealthUsu;
+import br.com.nutriscare.nutrisCareRulesApi.entity.Diet;
 
-rule "Low Score Rule 1"
+rule "Low Score"
     when
-        user: User(name == "Vinicius Dantas")
+        $user : HealthUsu(id != null)
     then
-        // Ações específicas para pontuação alta
-        System.out.println("Aplicando regra de alta pontuação 1");
+        Diet diet = new Diet();
+        diet.setUsuId($user.getId());
+        diet.setCarboPercentage(55.0);
+        diet.setProteinPercentage(25.0);
+        diet.setLipidPercentage(20.0);
+
+        insert(diet);
 end

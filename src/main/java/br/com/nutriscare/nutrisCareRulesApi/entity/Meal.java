@@ -9,23 +9,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.List;
 
 @Data
-@Document(collection = "t_diet")
+@Document(collection = "t_meal")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Diet {
+public class Meal {
 
     @Id
     private String id;
 
-    private String usuId;
-
-    private Double proteinPercentage;
-
-    private Double carboPercentage;
-
-    private Double lipidPercentage;
-
-    private List<Meal> meals;
-
-    private List<String> forbiddenFoods;
+    private String name;
+    private List<Food> foodItems;
 }

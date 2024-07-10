@@ -47,9 +47,9 @@ public class DietService {
     }
 
     private KieSession getKieSessionForScore(double score) {
-        if (score > 0.7) {
+        if (score > 0.67) {
             return highScoreSession;
-        } else if (score > 0.4) {
+        } else if (score > 0.34) {
             return mediumScoreSession;
         } else {
             return lowScoreSession;

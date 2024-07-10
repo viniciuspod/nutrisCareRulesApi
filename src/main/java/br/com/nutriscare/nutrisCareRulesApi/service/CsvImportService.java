@@ -24,9 +24,9 @@ public class CsvImportService {
     @Autowired
     private FoodRepository foodRepository;
 
-    public void importCsv(String path){
+    public void importCsv(){
         try {
-            FileReader fileReader = new FileReader(path);
+            FileReader fileReader = new FileReader("C://NUTRISCARE//alimentos.csv");
             CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
             CSVReader reader = new CSVReaderBuilder(fileReader)
                     .withCSVParser(parser)
