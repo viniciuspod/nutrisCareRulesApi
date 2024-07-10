@@ -1,0 +1,11 @@
+package org.mediumScore;
+
+import br.com.nutriscare.nutrisCareRulesApi.entity.User
+
+rule "Medium Score Rule 1"
+    when
+        user: User(name == "Vinicius Dantas")
+    then
+        // Ações específicas para pontuação média
+        System.out.println("Aplicando regra de média pontuação 1");
+end

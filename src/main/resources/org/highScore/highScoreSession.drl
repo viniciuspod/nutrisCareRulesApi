@@ -1,0 +1,11 @@
+package org.highScore;
+
+import br.com.nutriscare.nutrisCareRulesApi.entity.User
+
+rule "High Score Rule 1"
+    when
+        user: User(name == "Vinicius Dantas")
+    then
+        // Ações específicas para pontuação alta
+        System.out.println("Aplicando regra de alta pontuação 1");
+end
