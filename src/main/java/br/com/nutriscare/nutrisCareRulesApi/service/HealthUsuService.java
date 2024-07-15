@@ -25,32 +25,13 @@ public class HealthUsuService {
         try{
 
             HealthUsu healthUsu = healthUsuRepository.save(
-                    healthUsuBuilder.buildHealthUsu(healthUsuDTO, calculateBMI(healthUsuDTO.getUserId())));
+                    healthUsuBuilder.buildHealthUsu(healthUsuDTO));
             userService.editHealthUsu(healthUsuDTO.getUserId(),healthUsu);
             return healthUsu;
         } catch (Exception e) {
             log.info("ERROR to save HealthUsu" + e.getMessage());
             throw new RuntimeException(e);
         }
-    }
-
-    private Double calculateBMI(String userId) {
-        try {
-            User user = getUserById(userId);
-            Double height = user.getHeight();
-            Double weight = user.getWeight();
-            if (height <= 0 || weight <= 0) {
-                throw new IllegalArgumentException("Height and Weight must be greater than 0.");
-            }
-            return weight / (height * height);
-        } catch (Exception e) {
-            log.info("ERROR to calculate BMI" + e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-
-    private User getUserById(String id) {
-        return userService.getUserById(id);
     }
 
     public HealthUsu getHealthUsu(String id) {

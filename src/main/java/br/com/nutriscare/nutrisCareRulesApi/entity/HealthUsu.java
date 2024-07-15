@@ -24,6 +24,7 @@ public class HealthUsu {
     private Double cholesterolLevel;
     private Double glucoseLevel;
     private Double bmi;
+    private Double bmr;
     private List<String> medicalConsultationHistory;
     private List<String> foodAllergies;
     private List<String> supplementation;

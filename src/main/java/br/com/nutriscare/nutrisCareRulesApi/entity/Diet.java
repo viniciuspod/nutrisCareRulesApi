@@ -19,6 +19,10 @@ public class Diet {
 
     private String usuId;
 
+    private String observation;
+
+    private Double totalCalories;
+
     private Double proteinPercentage;
 
     private Double carboPercentage;

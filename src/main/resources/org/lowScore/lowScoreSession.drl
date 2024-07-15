@@ -6,13 +6,14 @@ import br.com.nutriscare.nutrisCareRulesApi.entity.Diet;
 
 rule "Low Score"
     when
-        $user : HealthUsu(id != null)
+        $user : HealthUsu(bmi > 24.9)
     then
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
         diet.setCarboPercentage(55.0);
         diet.setProteinPercentage(25.0);
         diet.setLipidPercentage(20.0);
+        diet.setTotalCalories(1500.0);
 
         insert(diet);
 end
