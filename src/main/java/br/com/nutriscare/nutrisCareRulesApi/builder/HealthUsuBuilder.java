@@ -51,13 +51,18 @@ public class HealthUsuBuilder {
     private Double calculateBMR(String userId) {
         try {
             User user = getUserById(userId);
-            Double height = user.getHeight();
+            Double height = user.getHeight() * 100;
             Double weight = user.getWeight();
+            String gender = user.getGender();
             Integer years = objectHelper.calculateYears(user.getBirthDate());
-            if (height <= 0 || weight <= 0) {
-                throw new IllegalArgumentException("Height and Weight must be greater than 0.");
+
+            Double bmr;
+            if (gender.equalsIgnoreCase("M")) {
+                bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * years);
+            } else {
+                bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * years);
             }
-            return null;
+            return bmr;
         } catch (Exception e) {
             log.info("ERROR to calculate BMR" + e.getMessage());
             throw new RuntimeException(e);
