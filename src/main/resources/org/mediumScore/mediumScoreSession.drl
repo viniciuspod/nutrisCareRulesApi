@@ -1,11 +1,144 @@
 package org.mediumScore;
 
-import br.com.nutriscare.nutrisCareRulesApi.entity.User
+import br.com.nutriscare.nutrisCareRulesApi.entity.User;
+import br.com.nutriscare.nutrisCareRulesApi.entity.HealthUsu;
+import br.com.nutriscare.nutrisCareRulesApi.entity.Diet;
 
-rule "Medium Score Rule 1"
+
+rule "Medium Score - Maintenance Diet for Sedentary Female"
     when
-        user: User(name == "Vinicius Dantas")
+        $user : User(gender == "F", levelPhysicalActivityLevel == 1)
+        $healthUsu : HealthUsu(id == $user.getHealthUsu().getId())
     then
-        // Ações específicas para pontuação média
-        System.out.println("Aplicando regra de média pontuação 1");
+        Diet diet = new Diet();
+        diet.setUsuId($user.getId());
+        diet.setCarboPercentage(50.0);
+        diet.setProteinPercentage(30.0);
+        diet.setLipidPercentage(20.0);
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
+                                    new Meal("Lunch", new ArrayList<>()),
+                                    new Meal("Dinner", new ArrayList<>())));
+
+        Double tdee = $healthUsu.getTdee();
+        Double totalCalories = tdee;
+
+        diet.setTotalCalories(totalCalories);
+
+        insert(diet);
+end
+
+rule "Medium Score - Maintenance Diet for Active Female"
+    when
+        $user : User(gender == "F", levelPhysicalActivityLevel >= 2, levelPhysicalActivityLevel <= 4)
+        $healthUsu : HealthUsu(id == $user.getHealthUsu().getId())
+    then
+        Diet diet = new Diet();
+        diet.setUsuId($user.getId());
+        diet.setCarboPercentage(55.0);
+        diet.setProteinPercentage(25.0);
+        diet.setLipidPercentage(20.0);
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
+                                    new Meal("Lunch", new ArrayList<>()),
+                                    new Meal("Snack", new ArrayList<>()),
+                                    new Meal("Dinner", new ArrayList<>())));
+
+        Double tdee = $healthUsu.getTdee();
+        Double totalCalories = tdee;
+
+        diet.setTotalCalories(totalCalories);
+
+        insert(diet);
+end
+
+rule "Medium Score - Maintenance Diet for Highly Active Female"
+    when
+        $user : User(gender == "F", levelPhysicalActivityLevel == 5)
+        $healthUsu : HealthUsu(id == $user.getHealthUsu().getId())
+    then
+        Diet diet = new Diet();
+        diet.setUsuId($user.getId());
+        diet.setCarboPercentage(60.0);
+        diet.setProteinPercentage(25.0);
+        diet.setLipidPercentage(15.0);
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
+                                    new Meal("Snack", new ArrayList<>()),
+                                    new Meal("Lunch", new ArrayList<>()),
+                                    new Meal("Snack", new ArrayList<>()),
+                                    new Meal("Dinner", new ArrayList<>())));
+
+        Double tdee = $healthUsu.getTdee();
+        Double totalCalories = tdee; // Sem déficit de calorias
+
+        diet.setTotalCalories(totalCalories);
+
+        insert(diet);
+end
+
+rule "Medium Score - Maintenance Diet for Sedentary Male"
+    when
+        $user : User(gender == "M", levelPhysicalActivityLevel == 1)
+        $healthUsu : HealthUsu(id == $user.getHealthUsu().getId())
+    then
+        Diet diet = new Diet();
+        diet.setUsuId($user.getId());
+        diet.setCarboPercentage(45.0);
+        diet.setProteinPercentage(35.0);
+        diet.setLipidPercentage(20.0);
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
+                                    new Meal("Lunch", new ArrayList<>()),
+                                    new Meal("Dinner", new ArrayList<>())));
+
+        Double tdee = $healthUsu.getTdee();
+        Double totalCalories = tdee;
+
+        diet.setTotalCalories(totalCalories);
+
+        insert(diet);
+end
+
+rule "Medium Score - Maintenance Diet for Active Male"
+    when
+        $user : User(gender == "M", levelPhysicalActivityLevel >= 2, levelPhysicalActivityLevel <= 4)
+        $healthUsu : HealthUsu(id == $user.getHealthUsu().getId())
+    then
+        Diet diet = new Diet();
+        diet.setUsuId($user.getId());
+        diet.setCarboPercentage(50.0);
+        diet.setProteinPercentage(30.0);
+        diet.setLipidPercentage(20.0);
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
+                                    new Meal("Lunch", new ArrayList<>()),
+                                    new Meal("Snack", new ArrayList<>()),
+                                    new Meal("Dinner", new ArrayList<>())));
+
+        Double tdee = $healthUsu.getTdee();
+        Double totalCalories = tdee;
+
+        diet.setTotalCalories(totalCalories);
+
+        insert(diet);
+end
+
+rule "Medium Score - Maintenance Diet for Highly Active Male"
+    when
+        $user : User(gender == "M", levelPhysicalActivityLevel == 5)
+        $healthUsu : HealthUsu(id == $user.getHealthUsu().getId())
+    then
+        Diet diet = new Diet();
+        diet.setUsuId($user.getId());
+        diet.setCarboPercentage(55.0);
+        diet.setProteinPercentage(30.0);
+        diet.setLipidPercentage(15.0);
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
+                                    new Meal("Snack", new ArrayList<>()),
+                                    new Meal("Lunch", new ArrayList<>()),
+                                    new Meal("Snack", new ArrayList<>()),
+                                    new Meal("Dinner", new ArrayList<>())));
+
+        Double tdee = $healthUsu.getTdee();
+        Double totalCalories = tdee;
+
+        diet.setTotalCalories(totalCalories);
+
+        insert(diet);
 end
