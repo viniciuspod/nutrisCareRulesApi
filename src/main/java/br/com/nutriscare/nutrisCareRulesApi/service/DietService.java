@@ -45,14 +45,8 @@ public class DietService {
             double score = getScoreNormalized(user);
 
             KieSession kieSession = getKieSessionForScore(score);
-            System.out.println("KieSession criada com sucesso: " + kieSession);
-            Collection<KiePackage> knowledgePackages = kieSession.getKieBase().getKiePackages();
-            System.out.println("Pacotes de conhecimento carregados: " + knowledgePackages.size());
-
             kieSession.insert(user);
             kieSession.fireAllRules();
-
-            //System.out.println("Número de regras disparadas: " + kieSession.get);
 
             Diet diet = (Diet) kieSession.getObjects().stream()
                     .filter(obj -> obj instanceof Diet)
