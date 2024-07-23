@@ -10,12 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Slf4j
 public class DietService {
 
     @Autowired
     private DietRepository dietRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     @Qualifier("getHighScoreSession")
@@ -30,16 +36,26 @@ public class DietService {
     private KieSession lowScoreSession;
 
 
-    public Diet buildDiet(User user){
+    public Diet buildDiet(String userId){
         try {
+            User user = getUser(userId);
             double score = getScoreNormalized(user);
 
             KieSession kieSession = getKieSessionForScore(score);
             kieSession.insert(user);
             kieSession.fireAllRules();
+
+            Diet diet = null;
+            for (Object obj : kieSession.getObjects()) {
+                if (obj instanceof Diet) {
+                    diet = (Diet) obj;
+                    break;
+                }
+            }
+
             kieSession.dispose();
 
-            return null;
+            return diet;
         } catch (Exception e) {
             log.info("ERROR to build diet" + e.getMessage());
             throw new RuntimeException(e);
@@ -68,5 +84,9 @@ public class DietService {
         return (normalizedGoalLevel * goalWeight) +
                 (normalizedActivityLevel * activityWeight) +
                 (normalizedBMI * bmiWeight);
+    }
+
+    private User getUser(String userId){
+        return userService.getUserById(userId);
     }
 }

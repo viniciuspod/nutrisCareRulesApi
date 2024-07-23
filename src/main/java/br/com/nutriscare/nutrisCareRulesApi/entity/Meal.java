@@ -19,4 +19,9 @@ public class Meal {
 
     private String name;
     private List<Food> foodItems;
+
+    public Meal(String name, List<Food> foodItems) {
+        this.name = name;
+        this.foodItems = foodItems;
+    }
 }

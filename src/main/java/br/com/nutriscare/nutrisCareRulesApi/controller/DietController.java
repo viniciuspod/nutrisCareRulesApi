@@ -1,5 +1,6 @@
 package br.com.nutriscare.nutrisCareRulesApi.controller;
 
+import br.com.nutriscare.nutrisCareRulesApi.entity.Diet;
 import br.com.nutriscare.nutrisCareRulesApi.entity.Food;
 import br.com.nutriscare.nutrisCareRulesApi.service.DietService;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +21,10 @@ public class DietController {
     private DietService dietService;
 
     @PostMapping(path = "/build")
-    public ResponseEntity<?> buildDiet(){
+    public ResponseEntity<?> buildDiet(String userId){
         try {
-            //dietService.buildDiet();
-            return ResponseEntity.ok().body(null);
+            Diet diet  = dietService.buildDiet(userId);
+            return ResponseEntity.ok().body(diet);
         }catch (Exception e){
             log.info("Error to search foods", e);
             return ResponseEntity.badRequest().body("Error to build a diet");

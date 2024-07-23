@@ -1,8 +1,11 @@
 package org.lowScore;
 
+import java.util.Arrays;
+import java.util.ArrayList;
 import br.com.nutriscare.nutrisCareRulesApi.entity.User;
 import br.com.nutriscare.nutrisCareRulesApi.entity.HealthUsu;
 import br.com.nutriscare.nutrisCareRulesApi.entity.Diet;
+import br.com.nutriscare.nutrisCareRulesApi.entity.Meal;
 
 
 rule "Low Score - Low Calorie Deficit Diet for Sedentary Female"
@@ -17,8 +20,8 @@ rule "Low Score - Low Calorie Deficit Diet for Sedentary Female"
         diet.setLipidPercentage(20.0);
         diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
                                     new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()))),
-                                    new Meal("Dinner", new ArrayList<>());
+                                    new Meal("Snack", new ArrayList<>()),
+                                    new Meal("Dinner", new ArrayList<>())));
 
         Double deficit = 500.0;
         Double tdee = $healthUsu.getTdee();
@@ -40,10 +43,10 @@ rule "Low Score - Low Calorie Deficit Diet for Active Female"
         diet.setProteinPercentage(25.0);
         diet.setLipidPercentage(20.0);
         diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()))),
+                                    new Meal("Snack", new ArrayList<>()),
                                     new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()))),
-                                    new Meal("Dinner", new ArrayList<>());
+                                    new Meal("Snack", new ArrayList<>()),
+                                    new Meal("Dinner", new ArrayList<>())));
 
         Double deficit = 500.0;
         Double tdee = $healthUsu.getTdee();
@@ -66,10 +69,10 @@ rule "Low Score - Low Calorie Deficit Diet for Highly Active Female"
         diet.setLipidPercentage(15.0);
         diet.setMeals(Arrays.asList(new Meal("Pre workout snack", new ArrayList<>()),
                                     new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()))),
+                                    new Meal("Snack", new ArrayList<>()),
                                     new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()))),
-                                    new Meal("Dinner", new ArrayList<>());
+                                    new Meal("Snack", new ArrayList<>()),
+                                    new Meal("Dinner", new ArrayList<>())));
 
         Double deficit = 500.0;
         Double tdee = $healthUsu.getTdee();
@@ -92,8 +95,8 @@ rule "Low Score - Low Calorie Deficit Diet for Sedentary Male"
         diet.setLipidPercentage(20.0);
         diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
                                     new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()))),
-                                    new Meal("Dinner", new ArrayList<>());
+                                    new Meal("Snack", new ArrayList<>()),
+                                    new Meal("Dinner", new ArrayList<>())));
 
         Double deficit = 500.0;
         Double tdee = $healthUsu.getTdee();
@@ -115,10 +118,10 @@ rule "Low Score - Low Calorie Deficit Diet for Active Male"
         diet.setProteinPercentage(30.0);
         diet.setLipidPercentage(20.0);
         diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()))),
+                                    new Meal("Snack", new ArrayList<>()),
                                     new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()))),
-                                    new Meal("Dinner", new ArrayList<>());
+                                    new Meal("Snack", new ArrayList<>()),
+                                    new Meal("Dinner", new ArrayList<>())));
 
         Double deficit = 500.0;
         Double tdee = $healthUsu.getTdee();
@@ -141,10 +144,10 @@ rule "Low Score - Low Calorie Deficit Diet for Highly Active Male"
         diet.setLipidPercentage(15.0);
         diet.setMeals(Arrays.asList(new Meal("Pre workout snack", new ArrayList<>()),
                                     new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()))),
+                                    new Meal("Snack", new ArrayList<>()),
                                     new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()))),
-                                    new Meal("Dinner", new ArrayList<>());
+                                    new Meal("Snack", new ArrayList<>()),
+                                    new Meal("Dinner", new ArrayList<>())));
 
         Double deficit = 500.0;
         Double tdee = $healthUsu.getTdee();
