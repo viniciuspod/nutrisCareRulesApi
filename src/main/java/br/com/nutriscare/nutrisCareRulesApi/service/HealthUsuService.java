@@ -23,13 +23,22 @@ public class HealthUsuService {
 
     public HealthUsu saveHealthUsu(HealthUsuDTO healthUsuDTO){
         try{
-
+            User user = getUserById(healthUsuDTO.getUserId());
             HealthUsu healthUsu = healthUsuRepository.save(
-                    healthUsuBuilder.buildHealthUsu(healthUsuDTO));
+                    healthUsuBuilder.buildHealthUsu(healthUsuDTO,user));
             userService.editHealthUsu(healthUsuDTO.getUserId(),healthUsu);
             return healthUsu;
         } catch (Exception e) {
             log.info("ERROR to save HealthUsu" + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    private User getUserById(String id) {
+        try {
+            return userService.getUserById(id);
+        } catch (Exception e) {
+            log.info("ERROR to get User" + e.getMessage());
             throw new RuntimeException(e);
         }
     }

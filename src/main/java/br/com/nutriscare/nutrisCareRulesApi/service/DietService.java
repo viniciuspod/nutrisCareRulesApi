@@ -57,10 +57,9 @@ public class DietService {
     }
 
     private double getScoreNormalized(User user){
-        // formula da normalização x = x-min/max-min
         double normalizedBMI = (24.9 - user.getHealthUsu().getBmi()) / (24.9 - 18.5);
         double normalizedGoalLevel = (user.getLevelGoals() - 1.0) / (3.0 - 1.0);
-        double normalizedActivityLevel = (user.getLevelPhysicalActivityLevel() - 1.0) / (3.0 - 1.0);
+        double normalizedActivityLevel = (user.getLevelPhysicalActivityLevel() - 1.0) / (5.0 - 1.0);
 
         double goalWeight = 0.3;
         double activityWeight = 0.3;

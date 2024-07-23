@@ -30,8 +30,8 @@ public class User {
     private String gender;
     private Double height;
     private Double weight;
-    private Double levelGoals;
-    private Double levelPhysicalActivityLevel;
+    private Integer levelGoals;
+    private Integer levelPhysicalActivityLevel;
     private String password;
     private HealthUsu healthUsu;
 }

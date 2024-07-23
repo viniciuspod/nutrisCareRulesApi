@@ -4,16 +4,23 @@ import br.com.nutriscare.nutrisCareRulesApi.entity.User;
 import br.com.nutriscare.nutrisCareRulesApi.entity.HealthUsu;
 import br.com.nutriscare.nutrisCareRulesApi.entity.Diet;
 
-rule "Low Score"
+
+rule "Low Score - Default low diet"
     when
-        $user : HealthUsu(bmi > 24.9)
+        $user : User()
+        $healthUsu : HealthUsu(id == $user.getHealthUsu().getId())
     then
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
         diet.setCarboPercentage(55.0);
         diet.setProteinPercentage(25.0);
         diet.setLipidPercentage(20.0);
-        diet.setTotalCalories(1500.0);
+
+        Double deficit = 500.0;
+        Double tdee = $healthUsu.getTdee();
+        Double totalCalories = tdee - deficit;
+
+        diet.setTotalCalories(totalCalories);
 
         insert(diet);
 end

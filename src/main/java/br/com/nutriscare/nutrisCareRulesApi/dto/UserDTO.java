@@ -33,6 +33,6 @@ public class UserDTO {
 
     private Double height;
     private Double weight;
-    private Double levelGoals;
-    private Double levelPhysicalActivityLevel;
+    private Integer levelGoals;
+    private Integer levelPhysicalActivityLevel;
 }

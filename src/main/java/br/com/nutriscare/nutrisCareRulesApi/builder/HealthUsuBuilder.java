@@ -9,22 +9,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
 @Slf4j
 public class HealthUsuBuilder {
 
-    @Autowired
-    private UserService userService;
-
     private final ObjectHelper objectHelper = new ObjectHelper();
 
-    public HealthUsu buildHealthUsu(HealthUsuDTO healthUsuDTO){
+    public HealthUsu buildHealthUsu(HealthUsuDTO healthUsuDTO, User user){
+        Double BMR = calculateBMR(user);
         return HealthUsu.builder()
                 .bloodPressure(healthUsuDTO.getBloodPressure())
                 .cholesterolLevel(healthUsuDTO.getCholesterolLevel())
                 .glucoseLevel(healthUsuDTO.getGlucoseLevel())
-                .bmi(calculateBMI(healthUsuDTO.getUserId()))
-                .bmr(calculateBMR(healthUsuDTO.getUserId()))
+                .bmi(calculateBMI(user))
+                .bmr(BMR)
+                .tdee(calculateTdee(BMR,user))
                 .medicalConsultationHistory(healthUsuDTO.getMedicalConsultationHistory())
                 .foodAllergies(healthUsuDTO.getFoodAllergies())
                 .supplementation(healthUsuDTO.getSupplementation())
@@ -33,9 +31,8 @@ public class HealthUsuBuilder {
                 .build();
     }
 
-    private Double calculateBMI(String userId) {
+    private Double calculateBMI(User user) {
         try {
-            User user = getUserById(userId);
             Double height = user.getHeight();
             Double weight = user.getWeight();
             if (height <= 0 || weight <= 0) {
@@ -48,19 +45,18 @@ public class HealthUsuBuilder {
         }
     }
 
-    private Double calculateBMR(String userId) {
+    private Double calculateBMR(User user) {
         try {
-            User user = getUserById(userId);
             Double height = user.getHeight() * 100;
             Double weight = user.getWeight();
             String gender = user.getGender();
             Integer years = objectHelper.calculateYears(user.getBirthDate());
 
-            Double bmr;
+            Double bmr = (10 * weight) + (6.25 * height) - (5 * years);
             if (gender.equalsIgnoreCase("M")) {
-                bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * years);
+                bmr += 5;
             } else {
-                bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * years);
+                bmr -= 161;
             }
             return bmr;
         } catch (Exception e) {
@@ -69,7 +65,19 @@ public class HealthUsuBuilder {
         }
     }
 
-    private User getUserById(String id) {
-        return userService.getUserById(id);
+    private Double calculateTdee(Double bmr, User user) {
+        try {
+            return switch (user.getLevelPhysicalActivityLevel()) {
+                case 1 -> bmr * 1.2;
+                case 2 -> bmr * 1.375;
+                case 3 -> bmr * 1.55;
+                case 4 -> bmr * 1.725;
+                case 5 -> bmr * 1.9;
+                default -> bmr * 0;
+            };
+        } catch (Exception e) {
+            log.info("ERROR to calculate TDEE" + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 }

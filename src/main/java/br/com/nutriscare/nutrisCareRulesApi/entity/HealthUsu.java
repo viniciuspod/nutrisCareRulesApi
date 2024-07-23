@@ -1,5 +1,7 @@
 package br.com.nutriscare.nutrisCareRulesApi.entity;
 
+import br.com.nutriscare.nutrisCareRulesApi.dto.HealthUsuDTO;
+import br.com.nutriscare.nutrisCareRulesApi.helper.ObjectHelper;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +27,7 @@ public class HealthUsu {
     private Double glucoseLevel;
     private Double bmi;
     private Double bmr;
+    private Double tdee;
     private List<String> medicalConsultationHistory;
     private List<String> foodAllergies;
     private List<String> supplementation;
