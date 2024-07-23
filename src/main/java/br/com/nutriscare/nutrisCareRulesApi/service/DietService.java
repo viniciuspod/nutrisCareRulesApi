@@ -4,6 +4,8 @@ import br.com.nutriscare.nutrisCareRulesApi.entity.Diet;
 import br.com.nutriscare.nutrisCareRulesApi.entity.User;
 import br.com.nutriscare.nutrisCareRulesApi.repository.DietRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.drools.core.definitions.impl.KnowledgePackageImpl;
+import org.kie.api.definition.KiePackage;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -42,16 +45,19 @@ public class DietService {
             double score = getScoreNormalized(user);
 
             KieSession kieSession = getKieSessionForScore(score);
+            System.out.println("KieSession criada com sucesso: " + kieSession);
+            Collection<KiePackage> knowledgePackages = kieSession.getKieBase().getKiePackages();
+            System.out.println("Pacotes de conhecimento carregados: " + knowledgePackages.size());
+
             kieSession.insert(user);
             kieSession.fireAllRules();
 
-            Diet diet = null;
-            for (Object obj : kieSession.getObjects()) {
-                if (obj instanceof Diet) {
-                    diet = (Diet) obj;
-                    break;
-                }
-            }
+            //System.out.println("Número de regras disparadas: " + kieSession.get);
+
+            Diet diet = (Diet) kieSession.getObjects().stream()
+                    .filter(obj -> obj instanceof Diet)
+                    .findFirst()
+                    .orElse(null);
 
             kieSession.dispose();
 

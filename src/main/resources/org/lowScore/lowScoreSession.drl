@@ -8,6 +8,17 @@ import br.com.nutriscare.nutrisCareRulesApi.entity.Diet;
 import br.com.nutriscare.nutrisCareRulesApi.entity.Meal;
 
 
+
+rule "Insert HealthUsu"
+when
+    $user : User()
+then
+    System.out.println("Teste");
+    HealthUsu healthUsu = new HealthUsu();
+    healthUsu = $user.getHealthUsu();
+    insert(healthUsu);
+end
+
 rule "Low Score - Low Calorie Deficit Diet for Sedentary Female"
     when
         $user : User(gender == "F", levelPhysicalActivityLevel == 1)
@@ -88,6 +99,7 @@ rule "Low Score - Low Calorie Deficit Diet for Sedentary Male"
         $user : User(gender == "M", levelPhysicalActivityLevel == 1)
         $healthUsu : HealthUsu(id == $user.getHealthUsu().getId())
     then
+        System.out.println("Teste2");
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
         diet.setCarboPercentage(45.0);
@@ -158,4 +170,27 @@ rule "Low Score - Low Calorie Deficit Diet for Highly Active Male"
         insert(diet);
 end
 
+rule "Low Score - Default"
+    when
+        $user : User()
+        $healthUsu : HealthUsu(id == $user.getHealthUsu().getId())
+    then
+        System.out.println("Teste");
+        Diet diet = new Diet();
+        diet.setUsuId($user.getId());
+        diet.setCarboPercentage(45.0);
+        diet.setProteinPercentage(35.0);
+        diet.setLipidPercentage(20.0);
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
+                                    new Meal("Lunch", new ArrayList<>()),
+                                    new Meal("Snack", new ArrayList<>()),
+                                    new Meal("Dinner", new ArrayList<>())));
 
+        Double deficit = 500.0;
+        Double tdee = $healthUsu.getTdee();
+        Double totalCalories = tdee - deficit;
+
+        diet.setTotalCalories(totalCalories);
+
+        insert(diet);
+end
