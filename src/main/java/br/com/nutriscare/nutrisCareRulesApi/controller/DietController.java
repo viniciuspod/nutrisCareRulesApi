@@ -27,7 +27,7 @@ public class DietController {
             Diet diet  = dietService.buildDiet(userId);
             return ResponseEntity.ok().body(diet);
         }catch (Exception e){
-            log.info("Error to search foods", e);
+            log.info("Error to build a diet", e);
             return ResponseEntity.badRequest().body("Error to build a diet");
         }
     }

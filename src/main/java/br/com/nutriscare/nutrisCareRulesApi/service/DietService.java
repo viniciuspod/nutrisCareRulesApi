@@ -27,16 +27,7 @@ public class DietService {
     private UserService userService;
 
     @Autowired
-    @Qualifier("getHighScoreSession")
-    private KieSession highScoreSession;
-
-    @Autowired
-    @Qualifier("getMediumScoreSession")
-    private KieSession mediumScoreSession;
-
-    @Autowired
-    @Qualifier("getLowScoreSession")
-    private KieSession lowScoreSession;
+    private KieContainer kieContainer;
 
 
     public Diet buildDiet(String userId){
@@ -55,7 +46,7 @@ public class DietService {
 
             kieSession.dispose();
 
-            return diet;
+            return saveDiet(diet);
         } catch (Exception e) {
             log.info("ERROR to build diet" + e.getMessage());
             throw new RuntimeException(e);
@@ -64,11 +55,11 @@ public class DietService {
 
     private KieSession getKieSessionForScore(double score) {
         if (score > 0.67) {
-            return highScoreSession;
+            return kieContainer.newKieSession();
         } else if (score > 0.34) {
-            return mediumScoreSession;
+            return kieContainer.newKieSession();
         } else {
-            return lowScoreSession;
+            return kieContainer.newKieSession();
         }
     }
 
@@ -84,6 +75,15 @@ public class DietService {
         return (normalizedGoalLevel * goalWeight) +
                 (normalizedActivityLevel * activityWeight) +
                 (normalizedBMI * bmiWeight);
+    }
+
+    private Diet saveDiet(Diet diet){
+        try {
+            return dietRepository.save(diet);
+        } catch (Exception e) {
+            log.info("ERROR to save diet" + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     private User getUser(String userId){
