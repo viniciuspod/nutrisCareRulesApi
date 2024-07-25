@@ -1,4 +1,4 @@
-package org.lowScore;
+package rules.lowScoreSession;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import br.com.nutriscare.nutrisCareRulesApi.entity.Meal;
 
 
 
-rule "Insert HealthUsu"
+rule "Insert HealthUsu LowScore "
 when
     $user : User()
 then

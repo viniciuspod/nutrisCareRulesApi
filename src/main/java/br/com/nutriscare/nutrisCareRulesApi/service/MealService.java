@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class MealService {
@@ -18,6 +20,15 @@ public class MealService {
             return mealRepository.save(meal);
         } catch (Exception e) {
             log.info("ERROR to save meal" + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveAllMeals(List<Meal> meals){
+        try {
+            mealRepository.saveAll(meals);
+        } catch (Exception e) {
+            log.info("ERROR to save all meals" + e.getMessage());
             throw new RuntimeException(e);
         }
     }

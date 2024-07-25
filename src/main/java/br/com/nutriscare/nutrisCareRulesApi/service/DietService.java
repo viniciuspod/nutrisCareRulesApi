@@ -5,6 +5,7 @@ import br.com.nutriscare.nutrisCareRulesApi.entity.User;
 import br.com.nutriscare.nutrisCareRulesApi.repository.DietRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.drools.core.definitions.impl.KnowledgePackageImpl;
+import org.kie.api.KieServices;
 import org.kie.api.definition.KiePackage;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -24,10 +25,10 @@ public class DietService {
     private DietRepository dietRepository;
 
     @Autowired
-    private UserService userService;
+    private MealService mealService;
 
     @Autowired
-    private KieContainer kieContainer;
+    private UserService userService;
 
 
     public Diet buildDiet(String userId){
@@ -54,12 +55,14 @@ public class DietService {
     }
 
     private KieSession getKieSessionForScore(double score) {
+        KieServices ks = KieServices.Factory.get();
+        KieContainer kContainer = ks.getKieClasspathContainer();
         if (score > 0.67) {
-            return kieContainer.newKieSession();
+            return kContainer.newKieSession("ksession-highScore");
         } else if (score > 0.34) {
-            return kieContainer.newKieSession();
+            return kContainer.newKieSession("ksession-mediumScore");
         } else {
-            return kieContainer.newKieSession();
+            return kContainer.newKieSession("ksession-lowScore");
         }
     }
 
@@ -79,6 +82,7 @@ public class DietService {
 
     private Diet saveDiet(Diet diet){
         try {
+            mealService.saveAllMeals(diet.getMeals());
             return dietRepository.save(diet);
         } catch (Exception e) {
             log.info("ERROR to save diet" + e.getMessage());

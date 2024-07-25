@@ -78,8 +78,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.kie</groupId>
-			<artifactId>kie-api</artifactId>
-			<version>${drools-version}</version>
+			<artifactId>kie-spring</artifactId>
+			<version>${drools-version}</version> <!-- Verifique a versão adequada -->
 		</dependency>
 		<dependency>
 			<groupId>org.drools</groupId>
