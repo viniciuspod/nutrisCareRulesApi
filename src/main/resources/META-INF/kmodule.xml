@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
+    <kbase name="kbase-lowScore" packages="rules.lowScoreSession">
+        <ksession name="ksession-lowScore"/>
+    </kbase>
+    <kbase name="kbase-mediumScore" packages="rules.mediumScoreSession">
+        <ksession name="ksession-mediumScore"/>
+    </kbase>
+    <kbase name="kbase-highScore" packages="rules.highScoreSession">
+        <ksession name="ksession-highScore"/>
+    </kbase>
+</kmodule>
