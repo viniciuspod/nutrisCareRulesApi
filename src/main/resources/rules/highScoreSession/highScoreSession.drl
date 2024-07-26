@@ -6,6 +6,7 @@ import br.com.nutriscare.nutrisCareRulesApi.entity.User;
 import br.com.nutriscare.nutrisCareRulesApi.entity.HealthUsu;
 import br.com.nutriscare.nutrisCareRulesApi.entity.Diet;
 import br.com.nutriscare.nutrisCareRulesApi.entity.Meal;
+import br.com.nutriscare.nutrisCareRulesApi.service.DietService;
 
 
 rule "Insert HealthUsu HIGH SCORE Session"
@@ -25,20 +26,22 @@ rule "High Score - High Calorie Surplus Diet for Sedentary Female"
     then
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
-        diet.setCarboPercentage(55.0);
-        diet.setProteinPercentage(30.0);
-        diet.setLipidPercentage(15.0);
-        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Dinner", new ArrayList<>())));
+        diet.setCarboPercentage(0.55);
+        diet.setProteinPercentage(0.30);
+        diet.setLipidPercentage(0.15);
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", 0.25),
+                                    new Meal("Snack", 0.10),
+                                    new Meal("Lunch", 0.35),
+                                    new Meal("Snack", 0.10),
+                                    new Meal("Dinner", 0.20)));
 
         Double surplus = 500.0;
         Double tdee = $healthUsu.getTdee();
         Double totalCalories = tdee + surplus;
 
         diet.setTotalCalories(totalCalories);
+
+        DietService.distributeCalories(diet);
 
         insert(diet);
 end
@@ -50,21 +53,23 @@ rule "High Score - High Calorie Surplus Diet for Active Female"
     then
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
-        diet.setCarboPercentage(60.0);
-        diet.setProteinPercentage(25.0);
-        diet.setLipidPercentage(15.0);
-        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Dinner", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>())));
+        diet.setCarboPercentage(0.60);
+        diet.setProteinPercentage(0.25);
+        diet.setLipidPercentage(0.15);
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", 0.20),
+                                    new Meal("Snack 1", 0.10),
+                                    new Meal("Lunch", 0.30),
+                                    new Meal("Snack 2", 0.10),
+                                    new Meal("Dinner", 0.25),
+                                    new Meal("Snack 3", 0.05)));
 
         Double surplus = 500.0;
         Double tdee = $healthUsu.getTdee();
         Double totalCalories = tdee + surplus;
 
         diet.setTotalCalories(totalCalories);
+
+        DietService.distributeCalories(diet);
 
         insert(diet);
 end
@@ -76,22 +81,24 @@ rule "High Score - High Calorie Surplus Diet for Highly Active Female"
     then
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
-        diet.setCarboPercentage(65.0);
-        diet.setProteinPercentage(20.0);
-        diet.setLipidPercentage(15.0);
-        diet.setMeals(Arrays.asList(new Meal("Pre workout snack", new ArrayList<>()),
-                                    new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Dinner", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>())));
+        diet.setCarboPercentage(0.65));
+        diet.setProteinPercentage(0.20);
+        diet.setLipidPercentage(0.15);
+        diet.setMeals(Arrays.asList(new Meal("Pre workout snack", 0.10),
+                                    new Meal("Breakfast", 0.20),
+                                    new Meal("Snack 1", 0.10),
+                                    new Meal("Lunch", 0.25),
+                                    new Meal("Snack 2", 0.10),
+                                    new Meal("Dinner", 0.15),
+                                    new Meal("Snack 3", 0.10)));
 
         Double surplus = 500.0;
         Double tdee = $healthUsu.getTdee();
         Double totalCalories = tdee + surplus;
 
         diet.setTotalCalories(totalCalories);
+
+        DietService.distributeCalories(diet);
 
         insert(diet);
 end
@@ -103,20 +110,22 @@ rule "High Score - High Calorie Surplus Diet for Sedentary Male"
     then
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
-        diet.setCarboPercentage(50.0);
-        diet.setProteinPercentage(35.0);
-        diet.setLipidPercentage(15.0);
-        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Dinner", new ArrayList<>())));
+        diet.setCarboPercentage(0.50);
+        diet.setProteinPercentage(0.35);
+        diet.setLipidPercentage(0.15);
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", 0.25),
+                                    new Meal("Snack", 0.10),
+                                    new Meal("Lunch", 0.35),
+                                    new Meal("Snack", 0.10),
+                                    new Meal("Dinner", 0.20)));
 
         Double surplus = 500.0;
         Double tdee = $healthUsu.getTdee();
         Double totalCalories = tdee + surplus;
 
         diet.setTotalCalories(totalCalories);
+
+        DietService.distributeCalories(diet);
 
         insert(diet);
 end
@@ -128,21 +137,23 @@ rule "High Score - High Calorie Surplus Diet for Active Male"
     then
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
-        diet.setCarboPercentage(55.0);
-        diet.setProteinPercentage(30.0);
-        diet.setLipidPercentage(15.0);
-        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Dinner", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>())));
+        diet.setCarboPercentage(0.55);
+        diet.setProteinPercentage(0.30);
+        diet.setLipidPercentage(0.15);
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", 0.20),
+                                    new Meal("Snack 1", 0.10),
+                                    new Meal("Lunch", 0.30),
+                                    new Meal("Snack 2", 0.10),
+                                    new Meal("Dinner", 0.25),
+                                    new Meal("Snack 3", 0.05)));
 
         Double surplus = 500.0;
         Double tdee = $healthUsu.getTdee();
         Double totalCalories = tdee + surplus;
 
         diet.setTotalCalories(totalCalories);
+
+        DietService.distributeCalories(diet);
 
         insert(diet);
 end
@@ -154,22 +165,24 @@ rule "High Score - High Calorie Surplus Diet for Highly Active Male"
     then
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
-        diet.setCarboPercentage(60.0);
-        diet.setProteinPercentage(25.0);
-        diet.setLipidPercentage(15.0);
-        diet.setMeals(Arrays.asList(new Meal("Pre workout snack", new ArrayList<>()),
-                                    new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Dinner", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>())));
+        diet.setCarboPercentage(0.60);
+        diet.setProteinPercentage(0.25);
+        diet.setLipidPercentage(0.15);
+        diet.setMeals(Arrays.asList(new Meal("Pre workout snack", 0.10),
+                                    new Meal("Breakfast", 0.20),
+                                    new Meal("Snack 1", 0.10),
+                                    new Meal("Lunch", 0.25),
+                                    new Meal("Snack 2", 0.10),
+                                    new Meal("Dinner", 0.15),
+                                    new Meal("Snack 3", 0.10)));
 
         Double surplus = 500.0;
         Double tdee = $healthUsu.getTdee();
         Double totalCalories = tdee + surplus;
 
         diet.setTotalCalories(totalCalories);
+
+        DietService.distributeCalories(diet);
 
         insert(diet);
 end

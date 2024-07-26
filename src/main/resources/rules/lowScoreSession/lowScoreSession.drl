@@ -6,6 +6,7 @@ import br.com.nutriscare.nutrisCareRulesApi.entity.User;
 import br.com.nutriscare.nutrisCareRulesApi.entity.HealthUsu;
 import br.com.nutriscare.nutrisCareRulesApi.entity.Diet;
 import br.com.nutriscare.nutrisCareRulesApi.entity.Meal;
+import br.com.nutriscare.nutrisCareRulesApi.service.DietService;
 
 
 
@@ -26,19 +27,22 @@ rule "Low Score - Low Calorie Deficit Diet for Sedentary Female"
     then
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
-        diet.setCarboPercentage(50.0);
-        diet.setProteinPercentage(30.0);
-        diet.setLipidPercentage(20.0);
-        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Dinner", new ArrayList<>())));
+        diet.setCarboPercentage(0.50);
+        diet.setProteinPercentage(0.30);
+        diet.setLipidPercentage(0.20);
+
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", 0.25),
+                                    new Meal("Lunch", 0.35),
+                                    new Meal("Snack", 0.10),
+                                    new Meal("Dinner", 0.30)));
 
         Double deficit = 500.0;
         Double tdee = $healthUsu.getTdee();
         Double totalCalories = tdee - deficit;
 
         diet.setTotalCalories(totalCalories);
+
+        DietService.distributeCalories(diet);
 
         insert(diet);
 end
@@ -50,20 +54,22 @@ rule "Low Score - Low Calorie Deficit Diet for Active Female"
     then
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
-        diet.setCarboPercentage(55.0);
-        diet.setProteinPercentage(25.0);
-        diet.setLipidPercentage(20.0);
-        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Dinner", new ArrayList<>())));
+        diet.setCarboPercentage(0.55);
+        diet.setProteinPercentage(0.25);
+        diet.setLipidPercentage(0.20);
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", 0.25),
+                                    new Meal("Snack", 0.10),
+                                    new Meal("Lunch", 0.35),
+                                    new Meal("Snack", 0.10),
+                                    new Meal("Dinner", 0.20)));
 
         Double deficit = 500.0;
         Double tdee = $healthUsu.getTdee();
         Double totalCalories = tdee - deficit;
 
         diet.setTotalCalories(totalCalories);
+
+        DietService.distributeCalories(diet);
 
         insert(diet);
 end
@@ -75,21 +81,23 @@ rule "Low Score - Low Calorie Deficit Diet for Highly Active Female"
     then
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
-        diet.setCarboPercentage(60.0);
-        diet.setProteinPercentage(25.0);
-        diet.setLipidPercentage(15.0);
-        diet.setMeals(Arrays.asList(new Meal("Pre workout snack", new ArrayList<>()),
-                                    new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Dinner", new ArrayList<>())));
+        diet.setCarboPercentage(0.60);
+        diet.setProteinPercentage(0.25);
+        diet.setLipidPercentage(0.15);
+        diet.setMeals(Arrays.asList(new Meal("Pre workout snack", 0.10),
+                                    new Meal("Breakfast", 0.25),
+                                    new Meal("Snack", 0.10),
+                                    new Meal("Lunch", 0.30),
+                                    new Meal("Snack", 0.10),
+                                    new Meal("Dinner", 0.15)));
 
         Double deficit = 500.0;
         Double tdee = $healthUsu.getTdee();
         Double totalCalories = tdee - deficit;
 
         diet.setTotalCalories(totalCalories);
+
+        DietService.distributeCalories(diet);
 
         insert(diet);
 end
@@ -101,19 +109,21 @@ rule "Low Score - Low Calorie Deficit Diet for Sedentary Male"
     then
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
-        diet.setCarboPercentage(45.0);
-        diet.setProteinPercentage(35.0);
-        diet.setLipidPercentage(20.0);
-        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Dinner", new ArrayList<>())));
+        diet.setCarboPercentage(0.45);
+        diet.setProteinPercentage(0.35);
+        diet.setLipidPercentage(0.20);
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", 0.25),
+                                    new Meal("Lunch", 0.35),
+                                    new Meal("Snack", 0.10),
+                                    new Meal("Dinner", 0.30)));
 
         Double deficit = 500.0;
         Double tdee = $healthUsu.getTdee();
         Double totalCalories = tdee - deficit;
 
         diet.setTotalCalories(totalCalories);
+
+        DietService.distributeCalories(diet);
 
         insert(diet);
 end
@@ -125,20 +135,22 @@ rule "Low Score - Low Calorie Deficit Diet for Active Male"
     then
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
-        diet.setCarboPercentage(50.0);
-        diet.setProteinPercentage(30.0);
-        diet.setLipidPercentage(20.0);
-        diet.setMeals(Arrays.asList(new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Dinner", new ArrayList<>())));
+        diet.setCarboPercentage(0.50);
+        diet.setProteinPercentage(0.30);
+        diet.setLipidPercentage(0.20);
+        diet.setMeals(Arrays.asList(new Meal("Breakfast", 0.25),
+                                    new Meal("Snack", 0.10),
+                                    new Meal("Lunch", 0.35),
+                                    new Meal("Snack", 0.10),
+                                    new Meal("Dinner", 0.20)));
 
         Double deficit = 500.0;
         Double tdee = $healthUsu.getTdee();
         Double totalCalories = tdee - deficit;
 
         diet.setTotalCalories(totalCalories);
+
+        DietService.distributeCalories(diet);
 
         insert(diet);
 end
@@ -150,21 +162,23 @@ rule "Low Score - Low Calorie Deficit Diet for Highly Active Male"
     then
         Diet diet = new Diet();
         diet.setUsuId($user.getId());
-        diet.setCarboPercentage(55.0);
-        diet.setProteinPercentage(30.0);
-        diet.setLipidPercentage(15.0);
-        diet.setMeals(Arrays.asList(new Meal("Pre workout snack", new ArrayList<>()),
-                                    new Meal("Breakfast", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Lunch", new ArrayList<>()),
-                                    new Meal("Snack", new ArrayList<>()),
-                                    new Meal("Dinner", new ArrayList<>())));
+        diet.setCarboPercentage(0.55);
+        diet.setProteinPercentage(0.30);
+        diet.setLipidPercentage(0.15);
+        diet.setMeals(Arrays.asList(new Meal("Pre workout snack", 0.10),
+                                    new Meal("Breakfast", 0.25),
+                                    new Meal("Snack", 0.10),
+                                    new Meal("Lunch", 0.30),
+                                    new Meal("Snack", 0.10),
+                                    new Meal("Dinner", 0.15)));
 
         Double deficit = 500.0;
         Double tdee = $healthUsu.getTdee();
         Double totalCalories = tdee - deficit;
 
         diet.setTotalCalories(totalCalories);
+
+        DietService.distributeCalories(diet);
 
         insert(diet);
 end

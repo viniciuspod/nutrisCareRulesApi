@@ -18,10 +18,15 @@ public class Meal {
     private String id;
 
     private String name;
+    private Double totalCaloriesPerCent;
+    private Double totalCalories;
+    private Double carbsGrams;
+    private Double proteinGrams;
+    private Double fatGrams;
     private List<Food> foodItems;
 
-    public Meal(String name, List<Food> foodItems) {
+    public Meal(String name, Double totalCaloriesPerCent) {
         this.name = name;
-        this.foodItems = foodItems;
+        this.totalCaloriesPerCent = totalCaloriesPerCent;
     }
 }

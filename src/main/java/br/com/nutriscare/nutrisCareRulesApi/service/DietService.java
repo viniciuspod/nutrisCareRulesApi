@@ -93,4 +93,19 @@ public class DietService {
     private User getUser(String userId){
         return userService.getUserById(userId);
     }
+
+    public static void distributeCalories(Diet diet){
+        Double totalCalories = diet.getTotalCalories();
+        Double carbPercentage = diet.getCarboPercentage();
+        Double proteinPercentage = diet.getProteinPercentage();
+        Double fatPercentage = diet.getLipidPercentage();
+
+        diet.getMeals().forEach(meal -> {
+            Double mealCalories = totalCalories * meal.getTotalCaloriesPerCent();
+            meal.setTotalCalories(mealCalories);
+            meal.setCarbsGrams(mealCalories * carbPercentage / 4);
+            meal.setProteinGrams(mealCalories * proteinPercentage / 4);
+            meal.setFatGrams(mealCalories * fatPercentage / 9);
+        });
+    }
 }
